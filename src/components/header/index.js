@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { Button } from "../ui/button";
 import { loginAction, logoutAction } from "@/actions";
+import { useSelector } from "react-redux";
 
 function Header({ getSession }) {
   console.log(getSession, "getSession in header");
@@ -15,6 +16,8 @@ function Header({ getSession }) {
     await loginAction();
   }
 
+  const { cart } = useSelector((state) => state);
+
   return (
     <header className="flex shadow-md py-4 px-4 bg-white min-h-[70px] tracking-wide relative z-50">
       <div className="flex flex-wrap items-center justify-between gap-5 w-full">
@@ -24,8 +27,9 @@ function Header({ getSession }) {
         <li className="text-lg font-semibold">
           <Link href={"/"}>Products</Link>
         </li>
-        <li className="text-lg font-semibold">
+        <li className="relative text-lg font-semibold">
           <Link href={"/cart"}>Cart</Link>
+          <span className="absolute h-[20px] w-[20px] rounded-full text-center bg-black text-white text-sm -top-1 -right-5">{cart?.cartItem.length}</span>
         </li>
       </ul>
       <div className="flex space-x-3">
